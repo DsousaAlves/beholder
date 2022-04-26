@@ -1,9 +1,10 @@
+import axios from 'axios';
+
+const API_URL = process.env.REACT_APP_URL_API || 3001;
+
 export async function doLogin(email, password) {
-    return new Promise((resolve, reject) => {
-        if(email === 'davidsousaalves@gmail.com'
-        && password === '123456'){
-            return resolve(true);
-        }
-        return reject(`Invalid user and/or password!`);
-    })
+    const urlLogin = `${API_URL}/login`;
+    console.log(urlLogin);
+    const response = await axios.post(urlLogin, {email, password});
+    return response.data;
 }
