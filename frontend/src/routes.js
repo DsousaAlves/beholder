@@ -12,14 +12,15 @@ function Routes() {
                 return localStorage.getItem('token')
                 ? children
                 : <Redirect to="/" />
-            }}
-             />
+            }} />
         );
     }
 
     return (
-        <BrowserRouter>
-            <Route path="/" component={Login} exact />
+        <BrowserRouter >
+            <Route path="/" exact >
+                <Login />
+            </Route>
             <PrivateRoute path="/settings">
                 <Settings />
             </PrivateRoute>
