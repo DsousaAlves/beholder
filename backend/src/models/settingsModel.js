@@ -21,11 +21,6 @@ const settingsModel = database.define('settings', {
     secretKey: Sequelize.STRING,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
-}, {
-    indexes: [{
-        fields: ['email'],
-        unique: true
-    }]
 });
 
 module.exports = settingsModel;
