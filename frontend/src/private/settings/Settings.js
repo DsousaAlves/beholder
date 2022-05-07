@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getSettings } from "../../services/SettingsService";
+import Menu from '../../components/menu/Menu';
 
 import {doLogout} from '../../services/AuthService';
 
@@ -39,27 +40,10 @@ function Settings() {
             });
     }, []);
 
-    function onLogoutClick(event) {
-        const token = localStorage.getItem('token');
-        doLogout(token)
-            .then(response => {
-                localStorage.removeItem('token');
-                history.push('/');
-            })
-            .catch(err => {
-                console.log('settings::doLogout::invalid token');
-            })
-    }
-
     return (
         <>
+            <Menu />
             <p>Hello Settings: { settings.email }</p>
-            <button type="button" className="btn btn-primary" onClick={onLogoutClick}>Logout</button>
-            {
-                error
-                    ? <div className="alert alert-danger">{error}</div>
-                    : <></>
-            }
         </>
     );
 }
