@@ -6,7 +6,8 @@ const helmet = require('helmet');
 const authMiddleware = require('./middlewares/authMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const {doLogin, doLogout} = require('./controllers/authController');
-const {getSettings} = require('./controllers/settingsControllers');
+const settingsController = require('./controllers/settingsControllers');
+
 
 const app = express();
 
@@ -16,7 +17,9 @@ app.use(express.json());
 
 app.post('/login', doLogin);
 
-app.get('/settings', authMiddleware, getSettings);
+app.get('/settings', authMiddleware, settingsController.getSettings);
+
+app.patch('/settings', authMiddleware, settingsController.updateSettings);
 
 app.post('/logout', doLogout);
 
