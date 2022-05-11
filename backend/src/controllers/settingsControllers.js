@@ -1,6 +1,7 @@
 const settingsRepository = require('../repositories/settingsRepository');
 
 async function getSettings(req, res, next) {
+    console.log('aqui')
     const id = res.locals.token.id;
     const settings = await settingsRepository.getSettings(id);
     const plainSettings = settings.get({ plain: true });

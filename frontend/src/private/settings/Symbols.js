@@ -51,8 +51,7 @@ function Symbols() {
     }
 
     function errorHandling(err) {
-        console.error(err.response ? err.response.data : err.message);
-        setError(err.response ? err.response.data : err.message);
+        setError(err.message ? err.message  : err.response.data);
         setSuccess('');
     }
 

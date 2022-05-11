@@ -20,7 +20,7 @@ app.use(morgan('dev'))
 
 app.post('/login', doLogin);
 
-app.get('/settings', authMiddleware, settingsRouter);
+app.use('/settings', authMiddleware, settingsRouter);
 
 app.use('/symbols', authMiddleware, symbolsRouter);
 
