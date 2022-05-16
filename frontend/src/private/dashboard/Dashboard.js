@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import useWebSocket from "react-use-websocket";
+import Menu from '../../components/menu/Menu';
+import MiniTicker from './miniTicker/MiniTicker';
 
 function Dashboard() {
 
@@ -22,7 +24,16 @@ function Dashboard() {
 
     return (
         <>
-            {JSON.stringify(miniTickerState)}
+            <Menu />
+            <main className="content">
+                <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                    <div className="d-block mb-4 mb-md-0">
+                        <h1 className="h4">Dashboard</h1>
+                    </div>
+                </div>
+                <div>Gráfico de candles</div>
+                <MiniTicker data={miniTickerState} />
+            </main>
         </>
     )
 }
