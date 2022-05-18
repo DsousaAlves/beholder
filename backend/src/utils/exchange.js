@@ -11,6 +11,7 @@ module.exports = (settings) => {
         recvWindow: 60000,
         urls: {
             base: settings.apiUrl.endsWith('/') ? settings.apiUrl : settings.apiUrl + '/',
+            stream: settings.streamUrl.endsWith('/') ? settings.streamUrl : settings.streamUrl + '/',
         },
         verbose: LOGS
     });

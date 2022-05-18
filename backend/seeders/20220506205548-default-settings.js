@@ -10,6 +10,7 @@ module.exports = {
         email: 'davidsousaalves@gmail.com',
         password: '$2a$12$pRJNLtnJMufrWa01oeYE5uirutvE4ayOCuMXoNnKuu5bl0VlulTTm',
         apiUrl: 'https://testnet.binance.vision/api',
+        streamUrl: 'wss://testnet.binance.vision/ws',
         accessKey: 'ZLiyUVWCWbxVuwuW2NjNUANdiRmqzAuGqHtdPzto0qG0Olcu6IbJjjqS8VMcN2YO',
         secretKey: crypto.encrypt('pcengcDHiPOf7p9KakJbNcyDP8xAWNXQ65BMNunEbllrU5mNIZc2lfk9R51EWIQm'),
         createdAt: new Date(),
