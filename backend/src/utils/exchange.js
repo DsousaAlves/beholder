@@ -10,7 +10,7 @@ module.exports = (settings) => {
         APISECRET: settings.secretKey,
         recvWindow: 60000,
         urls: {
-            base: settings.apiUrl.endsWith('/') ? settings.apiUrl : settings.apiUrl + '/'
+            base: settings.apiUrl.endsWith('/') ? settings.apiUrl : settings.apiUrl + '/',
         },
         verbose: LOGS
     });
@@ -23,8 +23,13 @@ module.exports = (settings) => {
         binance.websockets.miniTicker(markets => callback(markets));
     }
 
+    function bookStream(callback) {
+        binance.websockets.bookTickers(orders => callback(orders));
+    }
+
     return {
         exchangeInfo,
-        miniTickerStream
+        miniTickerStream,
+        bookStream
     }
 }

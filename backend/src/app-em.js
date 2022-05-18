@@ -18,5 +18,21 @@ module.exports = (settings, wss) => {
         })
     });
 
+    let book = [];
+    exchange.bookStream((orders) => {
+        if (book.length === 200) {
+            if (!wss || !wss.clients) return;
+
+            wss.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({book}));
+                }
+            })
+            book = [];
+        } else {
+            book.push({...orders});
+        }
+    });
+
     console.log('App Exchange Monitor is running');
 }
