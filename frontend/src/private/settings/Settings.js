@@ -12,6 +12,7 @@ function Settings() {
     const inputApiUrl = useRef('');
     const inputAccessKey = useRef('');
     const inputSecretKey = useRef('');
+    const inputStreamUrl = useRef('');
 
     const history = useHistory();
 
@@ -26,6 +27,7 @@ function Settings() {
                 inputEmail.current.value = settings.email;
                 inputApiUrl.current.value = settings.apiUrl;
                 inputAccessKey.current.value = settings.accessKey;
+                inputStreamUrl.current.value = settings.streamUrl;
             })
             .catch(err => {
                 if (err.response && err.response.status === 401)
@@ -48,7 +50,8 @@ function Settings() {
             password: inputNewPassword.current.value ? inputNewPassword.current.value : null,
             apiUrl: inputApiUrl.current.value,
             accessKey: inputAccessKey.current.value,
-            secretKey: inputSecretKey.current.value ? inputSecretKey.current.value : null
+            secretKey: inputSecretKey.current.value ? inputSecretKey.current.value : null,
+            streamUrl: inputStreamUrl.current.value ? inputStreamUrl.current.value : null
         }, token)
             .then(result => {
                 if (result) {
@@ -56,6 +59,7 @@ function Settings() {
                     inputSecretKey.current.value = '';
                     inputNewPassword.current.value = '';
                     inputConfirmPassword.current.value = '';
+                    inputStreamUrl.current.value = '';
                     return setSuccess(`Settings saved successfully!`);
                 }
                 else {
@@ -117,6 +121,14 @@ function Settings() {
                                 <div className="row">
                                     <div className="col-sm-12 mb-3">
                                         <div className="form-group">
+                                            <label htmlFor="inputStreamUrl">STREAM URL</label>
+                                            <input ref={inputStreamUrl} className="form-control" id="inputStreamUrl" type="text" placeholder="Your STREAM URL" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm-12 mb-3">
+                                        <div className="form-group">
                                             <label htmlFor="email">Access Key</label>
                                             <input ref={inputAccessKey} className="form-control" id="accessKey" type="text" placeholder="Your access key" />
                                         </div>
@@ -126,7 +138,7 @@ function Settings() {
                                     <div className="col-sm-12 mb-3">
                                         <div className="form-group">
                                             <label htmlFor="email">Secret Key</label>
-                                            <input ref={inputSecretKey} className="form-control" id="accessKey" type="password" placeholder="Your secret key" />
+                                            <input ref={inputSecretKey} className="form-control" id="secretKey" type="password" placeholder="Your secret key" />
                                         </div>
                                     </div>
                                 </div>

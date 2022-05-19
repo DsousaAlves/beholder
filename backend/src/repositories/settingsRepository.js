@@ -58,6 +58,9 @@ async function updateSettings(id, newSettings) {
     if (newSettings.accessKey && newSettings.accessKey !== currentSettings.accessKey)
         currentSettings.accessKey = newSettings.accessKey;
 
+    if (newSettings.streamUrl && newSettings.streamUrl !== currentSettings.streamUrl)
+        currentSettings.streamUrl = newSettings.streamUrl;
+
     if (newSettings.secretKey) {
         currentSettings.secretKey = crypto.encrypt(newSettings.secretKey);
     }
