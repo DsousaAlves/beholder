@@ -6,7 +6,9 @@ const sequelize = new Sequelize(
     process.env.DB_PWD,
     {
         dialect: process.env.DB_DIALECT,
-        host: process.env.DB_HOST
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        logging: process.env.DB_LOGS === 'true',
     }
 );
 
