@@ -32,7 +32,9 @@ function Dashboard() {
                 }
             }
         },
-        query: {},
+        queryParams: {
+            "token": localStorage.getItem('token')
+        },
         onError: (err) => console.log(err),
         shouldReconnect: (closeEvent) => true,
         reconnectInterval: 3000
