@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import useWebSocket from "react-use-websocket";
 import Menu from '../../components/menu/Menu';
 import MiniTicker from './miniTicker/MiniTicker';
@@ -69,7 +68,7 @@ function Dashboard() {
                     <Wallet data={balanceState} onUpdate={onWalletUpdate} />
                 </div>
             </main>
-            <NewOrderModal wallet={wallet} onSubmit={onSubmitOrder} />
+            {/* <NewOrderModal wallet={wallet} onSubmit={onSubmitOrder} /> */}
         </>
     )
 }
