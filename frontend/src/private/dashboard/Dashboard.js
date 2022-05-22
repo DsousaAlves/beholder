@@ -5,6 +5,7 @@ import Menu from '../../components/menu/Menu';
 import MiniTicker from './miniTicker/MiniTicker';
 import BookTicker from './bookTicker/BookTicker';
 import Wallet from './wallet/Wallet';
+import CandleChart from './CandleChart';
 
 function Dashboard() {
 
@@ -57,7 +58,7 @@ function Dashboard() {
                         <h1 className="h4">Dashboard</h1>
                     </div>
                 </div>
-                <div>Gráfico de candles</div>
+                <CandleChart symbol="BTCUSD" />
 
                 <div className="row">
                     <div className="col-12">
