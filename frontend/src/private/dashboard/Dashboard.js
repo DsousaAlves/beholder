@@ -6,6 +6,8 @@ import MiniTicker from './miniTicker/MiniTicker';
 import BookTicker from './bookTicker/BookTicker';
 import Wallet from './wallet/Wallet';
 import CandleChart from './CandleChart';
+import NewOrderButton from '../../components/newOrder/NewOrderButton';
+import NewOrderModal from '../../components/newOrder/NewOrderModal';
 
 function Dashboard() {
 
@@ -49,6 +51,10 @@ function Dashboard() {
         history.push('/orders/' + order.symbol);
     }
 
+    function onSubmitOrder(order) {
+        history.push('/orders/' + order.symbol);
+    }
+
     return (
         <>
             <Menu />
@@ -56,6 +62,14 @@ function Dashboard() {
                 <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
                     <div className="d-block mb-4 mb-md-0">
                         <h1 className="h4">Dashboard</h1>
+                    </div>
+                    <div className="btn-toolbar mb-md-0">
+                        {/* <div className="d-inline-flex align-items-center">
+                            <SelectSymbol onChange={onChangeSymbol} />
+                        </div> */}
+                        <div className="ms-2 ms-lg-3">
+                            <NewOrderButton />
+                        </div>
                     </div>
                 </div>
                 <CandleChart symbol="BTCUSD" />
@@ -71,7 +85,7 @@ function Dashboard() {
                     <Wallet data={balanceState} onUpdate={onWalletUpdate} />
                 </div>
             </main>
-            {/* <NewOrderModal wallet={wallet} onSubmit={onSubmitOrder} /> */}
+            <NewOrderModal wallet={wallet} onSubmit={onSubmitOrder} />
         </>
     )
 }
