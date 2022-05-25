@@ -10,6 +10,7 @@ const {doLogin, doLogout} = require('./controllers/authController');
 const settingsRouter = require('./routers/settingsRouter');
 const symbolsRouter = require('./routers/symbolsRouter');
 const exchangeRouter = require('./routers/exchangeRouter');
+const ordersRouter = require('./routers/ordersRouter');
 
 
 const app = express();
@@ -26,6 +27,8 @@ app.use('/settings', authMiddleware, settingsRouter);
 app.use('/symbols', authMiddleware, symbolsRouter);
 
 app.use('/exchange', authMiddleware, exchangeRouter);
+
+app.use('/orders', authMiddleware, ordersRouter);
 
 app.post('/logout', doLogout);
 

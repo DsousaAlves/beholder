@@ -51,10 +51,6 @@ function Dashboard() {
         history.push('/orders/' + order.symbol);
     }
 
-    function onSubmitOrder(order) {
-        history.push('/orders/' + order.symbol);
-    }
-
     return (
         <>
             <Menu />

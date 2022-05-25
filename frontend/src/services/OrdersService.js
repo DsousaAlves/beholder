@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ORDERS_URL = `${process.env.REACT_APP_API_URL}/orders/`;
+const ORDERS_URL = `${process.env.REACT_APP_URL_API}/orders/`;
 const { STOP_TYPES } = require('./ExchangeService');
 
 export async function getOrders(symbol, page, token) {
