@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const ordersRepository = require('./repositories/ordersRepository');
 
 module.exports = (settings, wss) => {
 
@@ -29,44 +30,44 @@ module.exports = (settings, wss) => {
         }
     });
 
-    // function processExecutionData(executionData) {
-    //     if (executionData.x === orderStatus.NEW) return;//ignora as novas, pois podem ter vindo de outras fontes
+    function processExecutionData(executionData) {
+        if (executionData.x === 'NEW') return;//ignora as novas, pois podem ter vindo de outras fontes
 
-    //     const order = {
-    //         symbol: executionData.s,
-    //         orderId: executionData.i,
-    //         clientOrderId: executionData.X === orderStatus.CANCELED ? executionData.C : executionData.c,
-    //         side: executionData.S,
-    //         type: executionData.o,
-    //         status: executionData.X,
-    //         isMaker: executionData.m,
-    //         transactTime: executionData.T
-    //     }
+        const order = {
+            symbol: executionData.s,
+            orderId: executionData.i,
+            clientOrderId: executionData.X === 'CANCELED' ? executionData.C : executionData.c,
+            side: executionData.S,
+            type: executionData.o,
+            status: executionData.X,
+            isMaker: executionData.m,
+            transactTime: executionData.T
+        }
 
-    //     if (order.status === orderStatus.FILLED) {
-    //         const quoteAmount = parseFloat(executionData.Z);
-    //         order.avgPrice = quoteAmount / parseFloat(executionData.z);
-    //         order.commission = executionData.n;
+        if (order.status === 'FILLED') {
+            const quoteAmount = parseFloat(executionData.Z);
+            order.avgPrice = quoteAmount / parseFloat(executionData.z);
+            order.commission = executionData.n;
 
-    //         const isQuoteCommission = executionData.N && order.symbol.endsWith(executionData.N);
-    //         order.net = isQuoteCommission ? quoteAmount - parseFloat(order.commission) : quoteAmount;
-    //     }
+            const isQuoteCommission = executionData.N && order.symbol.endsWith(executionData.N);
+            order.net = isQuoteCommission ? quoteAmount - parseFloat(order.commission) : quoteAmount;
+        }
 
-    //     if (order.status === orderStatus.REJECTED) order.obs = executionData.r;
+        if (order.status === 'REJECTED') order.obs = executionData.r;
 
-    //     setTimeout(() => {
-    //         ordersRepository.updateOrderByOrderId(order.orderId, order.clientOrderId, order)
-    //             .then(order => order && broadcast({ execution: order }))
-    //             .catch(err => console.error(err));
-    //     }, 3000)
-    // }
+        setTimeout(() => {
+            ordersRepository.updateOrderByOrderId(order.orderId, order.clientOrderId, order)
+                .then(order => order && broadcast({ execution: order }))
+                .catch(err => console.error(err));
+        }, 3000)
+    }
 
     exchange.userDataStream(
         balanceData => {
             broadcast({ balance: balanceData });
         },
         executionData => {
-            // processExecutionData(executionData)
+            processExecutionData(executionData)
             console.log(executionData);
         }
     )
