@@ -3,6 +3,7 @@ import {Route, BrowserRouter, Redirect} from 'react-router-dom';
 import Login from './public/Login/Login';
 import Settings from './private/settings/Settings';
 import Dashboard from './private/dashboard/Dashboard';
+import Orders from './private/orders/Orders';
 
 function Routes() {
 
@@ -27,6 +28,9 @@ function Routes() {
             </PrivateRoute>
             <PrivateRoute path="/dashboard">
                 <Dashboard />
+            </PrivateRoute>
+            <PrivateRoute path="/orders/:symbol?">
+                <Orders />
             </PrivateRoute>
         </BrowserRouter>
     )
