@@ -8,6 +8,7 @@ import Wallet from './wallet/Wallet';
 import CandleChart from './CandleChart';
 import NewOrderButton from '../../components/newOrder/NewOrderButton';
 import NewOrderModal from '../../components/newOrder/NewOrderModal';
+import SelectSymbol from '../../components/SelectSymbol/SelectSymbol';
 
 function Dashboard() {
 
@@ -20,6 +21,8 @@ function Dashboard() {
     const [balanceState, setBalanceState] = useState({});
 
     const [wallet, setWallet] = useState({});
+
+    const [chartSymbol, setChartSymbol] = useState('BTCUSDT');
 
     const { lastJsonMessage } = useWebSocket(process.env.REACT_APP_URL_WS, {
         onOpen: () => console.log('Connected to App WS Server'),
@@ -51,6 +54,10 @@ function Dashboard() {
         history.push('/orders/' + order.symbol);
     }
 
+    function onChangeSymbol(event) {
+        setChartSymbol(event.target.value);
+      }
+
     return (
         <>
             <Menu />
@@ -60,15 +67,15 @@ function Dashboard() {
                         <h1 className="h4">Dashboard</h1>
                     </div>
                     <div className="btn-toolbar mb-md-0">
-                        {/* <div className="d-inline-flex align-items-center">
+                        <div className="d-inline-flex align-items-center">
                             <SelectSymbol onChange={onChangeSymbol} />
-                        </div> */}
+                        </div>
                         <div className="ms-2 ms-lg-3">
                             <NewOrderButton />
                         </div>
                     </div>
                 </div>
-                <CandleChart symbol="BTCUSD" />
+                <CandleChart symbol={chartSymbol} />
 
                 <div className="row">
                     <div className="col-12">
