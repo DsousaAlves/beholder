@@ -1,6 +1,6 @@
 const monitorModel = require('../models/monitorModel');
 
-const monitorType = {
+const monitorTypes = {
     MINI_TICKER: 'MINI_TICKER',
     BOOK: 'BOOK',
     USER_DATA: 'USER_DATA',
@@ -89,7 +89,7 @@ async function monitorExists(type, symbol, interval) {
 }
 
 module.exports = {
-    monitorType,
+    monitorTypes,
     insertMonitor,
     deleteMonitor,
     updateMonitor,

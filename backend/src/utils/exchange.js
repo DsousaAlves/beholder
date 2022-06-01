@@ -1,5 +1,6 @@
 const Binance = require('node-binance-api');
 const LOGS = process.env.BINANCE_LOGS === 'true';
+const logger = require('./logger');
 
 module.exports = (settings) => {
 
@@ -67,6 +68,18 @@ module.exports = (settings) => {
         return trades.find(t => t.orderId === orderId);
     }
 
+    function chartStream(symbol, interval, callback) {
+        const streamUrl = binance.websockets.chart(symbol, interval, (symbol, interval, chart) => {
+            const tick = binance.last(chart);
+            if (tick && chart[tick] && chart[tick].isFinal === false)
+                return;
+
+            const ohlc = binance.ohlc(chart);
+            callback(ohlc);
+        });
+        if (LOGS) logger('system', `Chart Stream connected at ${streamUrl}`);
+    }
+
     return {
         exchangeInfo,
         miniTickerStream,
@@ -77,6 +90,7 @@ module.exports = (settings) => {
         sell,
         cancel,
         orderStatus,
-        orderTrade
+        orderTrade,
+        chartStream
     }
 }

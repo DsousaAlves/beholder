@@ -39,7 +39,11 @@ function Wallet(props) {
     }
 
     useEffect(() => {
-        getBalanceCall();
+        if (props.data && Object.entries(props.data).length) {
+            setBalances(props.data);
+        } else {
+            getBalanceCall();
+        }
     }, [props.data])
 
     return (<React.Fragment>
