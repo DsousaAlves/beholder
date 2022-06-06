@@ -3,29 +3,30 @@ const app = require('./app');
 const settingsRepository = require('./repositories/settingsRepository');
 const appEm = require('./app-em');
 const appWs = require('./app-ws');
-// const logger = require('./utils/logger');
+const logger = require('./utils/logger');
+const beholder = require('./beholder');
 
 (async () => {
-    console.log('system', `Getting the default settings with ID ${process.env.DEFAULT_SETTINGS_ID}...`);
+    logger('system', `Getting the default settings with ID ${process.env.DEFAULT_SETTINGS_ID}...`);
     const settings = await settingsRepository.getDefaultSettings()
     if (!settings) throw new Error(`There is no settings.`);
 
-    console.log('system', 'Initializing the Beholder Brain...');
+    logger('system', 'Initializing the Beholder Brain...');
 
     // const automations = await automationsRepository.getActiveAutomations();
-    // beholder.init(automations);
+    beholder.init([]);
 
-    // console.log('system', `Starting the Beholder Agenda...`);
+    // logger('system', `Starting the Beholder Agenda...`);
     // agenda.init(automations);
 
-    console.log('system', `Starting the server apps...`);
+    logger('system', `Starting the server apps...`);
     const server = app.listen(process.env.PORT, () => {
-        console.log('system', 'App is running at ' + process.env.PORT);
+        logger('system', 'App is running at ' + process.env.PORT);
     })
 
     const wss = appWs(server);
 
-    appEm.init(settings, wss, {});
+    appEm.init(settings, wss, beholder);
 })();
 
 

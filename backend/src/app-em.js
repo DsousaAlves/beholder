@@ -43,16 +43,16 @@ function startMiniTickerMonitor(monitorId, broadcastLabel, logs) {
         if (logs) logger('M:' + monitorId, markets);
 
         try {
-            // Object.entries(markets).map(async (mkt) => {
+            Object.entries(markets).map(async (mkt) => {
 
-            //     delete mkt[1].volume;
-            //     delete mkt[1].quoteVolume;
-            //     delete mkt[1].eventTime;
-            //     const converted = {};
-            //     Object.entries(mkt[1]).map(prop => converted[prop[0]] = parseFloat(prop[1]));
-            //     const results = await beholder.updateMemory(mkt[0], indexKeys.MINI_TICKER, null, converted);
-            //     if (results) results.map(r => sendMessage({ notification: r }));
-            // })
+                delete mkt[1].volume;
+                delete mkt[1].quoteVolume;
+                delete mkt[1].eventTime;
+                const converted = {};
+                Object.entries(mkt[1]).map(prop => converted[prop[0]] = parseFloat(prop[1]));
+                const results = await beholder.updateMemory(mkt[0], indexKeys.MINI_TICKER, null, converted);
+                if (results) results.map(r => sendMessage({ notification: r }));
+            })
 
             if (broadcastLabel && WSS) {
                 // sendMessage({ [broadcastLabel]: markets });
@@ -79,24 +79,26 @@ function startBookMonitor(monitorId, broadcastLabel, logs) {
                 } 
                 book = [];
             }
-            // else book.push({ ...order });
+            else {
+                book.push({ ...order });
+            }
 
-            // const orderCopy = { ...order };
-            // delete orderCopy.symbol;
-            // delete orderCopy.updateId;
-            // delete orderCopy.bestAskQty;
-            // delete orderCopy.bestBidQty;
+            const orderCopy = { ...order };
+            delete orderCopy.symbol;
+            delete orderCopy.updateId;
+            delete orderCopy.bestAskQty;
+            delete orderCopy.bestBidQty;
 
-            // const converted = {};
-            // Object.entries(orderCopy).map(prop => converted[prop[0]] = parseFloat(prop[1]));
+            const converted = {};
+            Object.entries(orderCopy).map(prop => converted[prop[0]] = parseFloat(prop[1]));
 
-            // const currentMemory = beholder.getMemory(order.symbol, indexKeys.BOOK);
+            const currentMemory = beholder.getMemory(order.symbol, indexKeys.BOOK);
 
-            // const newMemory = {};
-            // newMemory.previous = currentMemory ? currentMemory.current : converted;
-            // newMemory.current = converted;
+            const newMemory = {};
+            newMemory.previous = currentMemory ? currentMemory.current : converted;
+            newMemory.current = converted;
 
-            // const results = await beholder.updateMemory(order.symbol, indexKeys.BOOK, null, newMemory);
+            const results = await beholder.updateMemory(order.symbol, indexKeys.BOOK, null, newMemory);
             // if (results) results.map(r => sendMessage({ notification: r }));
         } catch (err) {
             if (logs) logger('M:' + monitorId, err);
@@ -149,7 +151,7 @@ async function loadWallet() {
     try {
         const info = await exchange.balance();
         const wallet = Object.entries(info).map(async (item) => {
-            // const results = await beholder.updateMemory(item[0], indexKeys.WALLET, null, parseFloat(item[1].available));
+            const results = await beholder.updateMemory(item[0], indexKeys.WALLET, null, parseFloat(item[1].available));
             // if (results) {
             //     results.map(r => sendMessage({ notification: r }));
             // }
@@ -196,6 +198,7 @@ function processExecutionData(executionData, broadcastLabel) {
         ordersRepository.updateOrderByOrderId(order.orderId, order.clientOrderId, order)
             .then(order => {
                if( order ) {
+                   beholder.updateMemory(order.symbol, indexKeys.LAST_ORDER, null, order );
                    if (broadcastLabel && WSS) {
                        WSS.broadcast({ [broadcastLabel]: order })
                     }
